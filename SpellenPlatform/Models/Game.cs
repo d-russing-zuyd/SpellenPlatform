@@ -2,7 +2,7 @@
 using System;
 namespace SpellenPlatform.Models
 {
-    public class GameDbContext : DbContext
+    public class SpellenPlatformContext : DbContext
     {
         public DbSet<Game> Games { get; set; }
     }

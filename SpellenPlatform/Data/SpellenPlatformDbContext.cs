@@ -10,5 +10,8 @@ namespace SpellenPlatform.Data
             : base(options)
         {
         }
+
+        public DbSet<Game> Games { get; set; }
+
     }
 }

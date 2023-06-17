@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SpellenPlatform.Models;
 
 namespace SpellenPlatform.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class SpellenPlatformDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public SpellenPlatformDbContext(DbContextOptions<SpellenPlatformDbContext> options)
             : base(options)
         {
         }

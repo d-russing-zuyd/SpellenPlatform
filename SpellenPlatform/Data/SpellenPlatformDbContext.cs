@@ -13,5 +13,7 @@ namespace SpellenPlatform.Data
 
         public DbSet<Game> Games { get; set; }
 
+        public DbSet<SpellenPlatform.Models.Category>? Category { get; set; }
+
     }
 }

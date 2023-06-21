@@ -1,0 +1,10 @@
+﻿@model IEnumerable<SpellenPlatform.Models.Category>
+
+<ul class="navbar-nav flex-grow-1">
+    @foreach (var category in Model)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="@category.CategoryName">@category.CategoryName</a>
+        </li>
+    }
+</ul>

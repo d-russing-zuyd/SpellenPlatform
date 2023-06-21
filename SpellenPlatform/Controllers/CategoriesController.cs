@@ -22,20 +22,20 @@ namespace SpellenPlatform.Controllers
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-              return _context.Category != null ? 
-                          View(await _context.Category.ToListAsync()) :
-                          Problem("Entity set 'SpellenPlatformDbContext.Category'  is null.");
+              return _context.Categories != null ? 
+                          View(await _context.Categories.ToListAsync()) :
+                          Problem("Entity set 'SpellenPlatformDbContext.Categories'  is null.");
         }
 
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Category == null)
+            if (id == null || _context.Categories == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Category
+            var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
@@ -70,12 +70,12 @@ namespace SpellenPlatform.Controllers
         // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Category == null)
+            if (id == null || _context.Categories == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Category.FindAsync(id);
+            var category = await _context.Categories.FindAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -121,12 +121,12 @@ namespace SpellenPlatform.Controllers
         // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Category == null)
+            if (id == null || _context.Categories == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Category
+            var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
@@ -141,14 +141,14 @@ namespace SpellenPlatform.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Category == null)
+            if (_context.Categories == null)
             {
-                return Problem("Entity set 'SpellenPlatformDbContext.Category'  is null.");
+                return Problem("Entity set 'SpellenPlatformDbContext.Categories'  is null.");
             }
-            var category = await _context.Category.FindAsync(id);
+            var category = await _context.Categories.FindAsync(id);
             if (category != null)
             {
-                _context.Category.Remove(category);
+                _context.Categories.Remove(category);
             }
             
             await _context.SaveChangesAsync();
@@ -157,7 +157,7 @@ namespace SpellenPlatform.Controllers
 
         private bool CategoryExists(int id)
         {
-          return (_context.Category?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

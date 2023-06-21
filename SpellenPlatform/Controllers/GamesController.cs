@@ -46,8 +46,10 @@ namespace SpellenPlatform.Controllers
         }
 
         // GET: Games/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewBag.Categories = await _context.Categories.Where(c => c.ShowInNav == true).ToListAsync();
+
             return View();
         }
 
@@ -56,8 +58,17 @@ namespace SpellenPlatform.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Link,ImageLink")] Game game)
+        public async Task<IActionResult> Create(string Name, string Description, string Link, string ImageLink, string CategoryId)
         {
+            Game game = new Game
+            {
+                Name = Name,
+                Description = Description,
+                Link = Link,
+                ImageLink = ImageLink,
+                CategoryId = Int32.Parse(CategoryId),
+            };
+
             if (ModelState.IsValid)
             {
                 _context.Add(game);

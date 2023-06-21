@@ -14,6 +14,8 @@ namespace SpellenPlatform.Models
         public string Description { get; set; }
         public string Link { get; set; }
         public string ImageLink { get; set; }
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 
 }

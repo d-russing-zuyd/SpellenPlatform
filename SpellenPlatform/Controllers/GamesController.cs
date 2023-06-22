@@ -22,9 +22,30 @@ namespace SpellenPlatform.Controllers
         // GET: Games
         public async Task<IActionResult> Index()
         {
-              return _context.Games != null ? 
-                          View(await _context.Games.ToListAsync()) :
-                          Problem("Entity set 'SpellenPlatformDbContext.Games'  is null.");
+            return _context.Games != null ?
+                        View(await _context.Games.ToListAsync()) :
+                        Problem("Entity set 'SpellenPlatformDbContext.Games'  is null.");
+        }
+
+        [Route("Games/{category}")]
+        [Route("Games")]
+        public IActionResult GamesPage(string category)
+        {
+            var categories = _context.Categories.Where(c => c.CategoryName == category);
+            var games = _context.Games.ToList();
+
+            if (categories.Any())
+            {
+                int categoryId = categories.Select(c => c.Id).First();
+                games = games.Where(g => g.CategoryId == categoryId).ToList();
+                ViewBag.Name = category;
+            }
+            else if (category == null)
+            {
+                ViewBag.Name = "Alle spellen";
+            }
+
+            return View(games);
         }
 
         // GET: Games/Details/5
@@ -161,14 +182,14 @@ namespace SpellenPlatform.Controllers
             {
                 _context.Games.Remove(game);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool GameExists(int id)
         {
-          return (_context.Games?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Games?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

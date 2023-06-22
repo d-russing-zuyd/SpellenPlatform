@@ -29,18 +29,23 @@ namespace SpellenPlatform.Controllers
 
         [Route("Games/{category}")]
         [Route("Games")]
-        public IActionResult GamesPage(string category)
+        public IActionResult GamesPage(string category, string searchString)
         {
             var categories = _context.Categories.Where(c => c.CategoryName == category);
             var games = _context.Games.ToList();
 
+            if (searchString != null)
+            {
+                string sqlString = "SELECT * FROM dbo.Games WHERE Name LIKE '%"+searchString+"%'";
+                games = _context.Games.FromSqlRaw(sqlString).ToList();
+            }
             if (categories.Any())
             {
                 int categoryId = categories.Select(c => c.Id).First();
                 games = games.Where(g => g.CategoryId == categoryId).ToList();
                 ViewBag.Name = category;
             }
-            else if (category == null)
+            else
             {
                 ViewBag.Name = "Alle spellen";
             }

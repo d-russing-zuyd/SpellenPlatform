@@ -9,6 +9,25 @@
 <p>
 	<a asp-action="Create">Create New</a>
 </p>
+
+
+
+<div class="container">
+
+	<div class="row text-center text-lg-start">
+		@foreach (var item in Model)
+		{
+			<div class="col-lg-3 col-md-4 col-6">
+				<a href="@item.Link" class="d-block mb-4 h-100">
+					<img class="img-fluid img-thumbnail" src="@item.ImageLink" alt="">
+				</a>
+			</div>
+		}
+	</div>
+</div>
+
+
+@* 
 <table class="table">
 	<thead>
 		<tr>
@@ -59,6 +78,6 @@
 			</tr>
 		}
 	</tbody>
-</table>
+</table> *@
 
 

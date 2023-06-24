@@ -19,6 +19,10 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     @await Component.InvokeAsync("Navbar", new {})
+                    <div class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" id="searchBar" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" onclick="searchGame();">Search</button>
+                    </div>
                     <partial name="_LoginPartial" />
                 </div>
             </div>
@@ -39,6 +43,14 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        function searchGame() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            urlParams.set('searchString', document.getElementById("searchBar").value);
+            window.location = "/Games?" + urlParams;
+        }
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

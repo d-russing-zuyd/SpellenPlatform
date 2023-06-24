@@ -1,64 +1,21 @@
 ﻿@model IEnumerable<SpellenPlatform.Models.Game>
 
 @{
-	ViewData["Title"] = "Index";
+	ViewData["Title"] = ViewBag.Name;
 }
 
-<h1>Index</h1>
+<h1>@ViewBag.Name</h1>
 
-<p>
-	<a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-	<thead>
-		<tr>
-			<th>
-				@Html.DisplayNameFor(model => model.Name)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Description)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.Link)
-			</th>
-			<th>
-				@Html.DisplayNameFor(model => model.ImageLink)
-			</th>
-			<th>
-				Image
-			</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
+<div class="container">
+
+	<div class="row text-center text-lg-start">
 		@foreach (var item in Model)
 		{
-			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => item.Name)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Description)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Link)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.ImageLink)
-				</td>
-				<td>
-					<div style="width: 150px; max-width: 100%; overflow: hidden; display: block;">
-						<img style="width: 100%;" src="@item.ImageLink">
-					</div>
-				</td>
-				<td>
-					<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-					<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-					<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-				</td>
-			</tr>
+			<div class="col-lg-3 col-md-4 col-6">
+				<a href="@item.Link" class="d-block mb-4 h-100">
+					<img class="img-fluid img-thumbnail" src="@item.ImageLink" alt="">
+				</a>
+			</div>
 		}
-	</tbody>
-</table>
-
-
+	</div>
+</div>

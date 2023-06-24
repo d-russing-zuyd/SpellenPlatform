@@ -19,39 +19,32 @@ namespace SpellenPlatform.Controllers
             _context = context;
         }
 
-        // GET: Games
-        public async Task<IActionResult> Index()
+		// GET: Games
+		[Route("Games/{category}")]
+		[Route("Games")]
+		public async Task<IActionResult> Index(string category, string searchString)
         {
-            return _context.Games != null ?
-                        View(await _context.Games.ToListAsync()) :
-                        Problem("Entity set 'SpellenPlatformDbContext.Games'  is null.");
-        }
+			var categories = _context.Categories.Where(c => c.CategoryName == category);
+			var games = await _context.Games.ToListAsync();
 
-        [Route("Games/{category}")]
-        [Route("Games")]
-        public IActionResult GamesPage(string category, string searchString)
-        {
-            var categories = _context.Categories.Where(c => c.CategoryName == category);
-            var games = _context.Games.ToList();
+			if (searchString != null)
+			{
+				string sqlString = "SELECT * FROM dbo.Games WHERE Name LIKE '%" + searchString + "%'";
+				games = await _context.Games.FromSqlRaw(sqlString).ToListAsync();
+			}
+			if (categories.Any())
+			{
+				int categoryId = categories.Select(c => c.Id).First();
+				games = games.Where(g => g.CategoryId == categoryId).ToList();
+				ViewBag.Name = category;
+			}
+			else
+			{
+				ViewBag.Name = "Alle spellen";
+			}
 
-            if (searchString != null)
-            {
-                string sqlString = "SELECT * FROM dbo.Games WHERE Name LIKE '%"+searchString+"%'";
-                games = _context.Games.FromSqlRaw(sqlString).ToList();
-            }
-            if (categories.Any())
-            {
-                int categoryId = categories.Select(c => c.Id).First();
-                games = games.Where(g => g.CategoryId == categoryId).ToList();
-                ViewBag.Name = category;
-            }
-            else
-            {
-                ViewBag.Name = "Alle spellen";
-            }
-
-            return View(games);
-        }
+			return View(games);
+		}
 
         // GET: Games/Details/5
         public async Task<IActionResult> Details(int? id)
